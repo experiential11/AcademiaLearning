@@ -249,24 +249,22 @@ function initContactForm() {
 
         try {
             // Get form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value,
+            const templateParams = {
                 to_name: 'Azaan',
-                to_email: 'azaan@academialearning.ca'
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                phone_number: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
             };
             
-            console.log('Attempting to send email with data:', formData);
+            console.log('Attempting to send email with data:', templateParams);
             
             // Send the email using EmailJS
             const response = await emailjs.send(
                 'service_yehujg8',
                 'template_morqydc',
-                formData,
-                'vM4XCTQee06R68Xkc'
+                templateParams
             );
             
             console.log('Email sent successfully:', response);
