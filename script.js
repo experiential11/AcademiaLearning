@@ -245,24 +245,13 @@ function initContactForm() {
         };
 
         try {
-            // Get form data
-            const templateParams = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value,
-                to_name: 'Azaan',
-                to_email: 'azaan@academialearning.ca'
-            };
+            // Use sendForm to submit the form directly
+            console.log('Attempting to send form...');
             
-            console.log('Attempting to send email with data:', templateParams);
-            
-            // Send the email using EmailJS
-            const response = await emailjs.send(
+            const response = await emailjs.sendForm(
                 'service_yehujg8',
                 'template_morqydc',
-                templateParams,
+                form,
                 'vM4XCTQee06R68Xkc'
             );
             
