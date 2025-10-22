@@ -216,8 +216,12 @@ function initContactForm() {
 
     // Initialize EmailJS
     (function() {
-        emailjs.init("vM4XCTQee06R68Xkc");
-        console.log('EmailJS Initialized');
+        emailjs.init({
+            publicKey: "vM4XCTQee06R68Xkc",
+            blockHeadless: true,
+            limitRate: true
+        });
+        console.log('EmailJS Initialized with security settings');
     })();
 
     // Form submission
