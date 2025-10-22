@@ -246,9 +246,9 @@ function initContactForm() {
 
         try {
             // Get form elements
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const phoneInput = document.getElementById('phone');
+            const nameInput = document.querySelector('input[name="user_name"]');
+            const emailInput = document.querySelector('input[name="user_email"]');
+            const phoneInput = document.querySelector('input[name="user_phone"]');
             const subjectInput = document.getElementById('subject');
             const messageInput = document.getElementById('message');
 
@@ -261,15 +261,13 @@ function initContactForm() {
 
             // Prepare the template parameters
             const templateParams = {
-                to: 'azaan@academialearning.ca',
-                from_name: nameInput.value,
-                from_email: emailInput.value,
-                phone_number: phoneInput.value,
-                subject: subjectInput.value,
+                user_name: nameInput.value,
+                user_email: emailInput.value,
+                user_phone: phoneInput.value,
+                user_subject: subjectInput.value,
                 message: messageInput.value,
-                email: 'azaan@academialearning.ca', // Adding both possible parameter names
-                to_email: 'azaan@academialearning.ca',
-                reply_to: emailInput.value
+                to_name: "Azaan",
+                recipient: "azaan@academialearning.ca"
             };
             
             console.log('Attempting to send email with params:', templateParams);
