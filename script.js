@@ -245,13 +245,23 @@ function initContactForm() {
         };
 
         try {
-            // Use sendForm to submit the form directly
-            console.log('Attempting to send form...');
+            // Prepare the template parameters
+            const templateParams = {
+                from_name: form.from_name.value,
+                from_email: form.from_email.value,
+                phone_number: form.phone_number.value,
+                subject: form.subject.value,
+                message: form.message.value,
+                to_email: 'azaan@academialearning.ca'
+            };
             
-            const response = await emailjs.sendForm(
+            console.log('Attempting to send email with params:', templateParams);
+            
+            // Send the email using EmailJS send method
+            const response = await emailjs.send(
                 'service_yehujg8',
                 'template_morqydc',
-                form,
+                templateParams,
                 'vM4XCTQee06R68Xkc'
             );
             
