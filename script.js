@@ -245,13 +245,27 @@ function initContactForm() {
         };
 
         try {
+            // Get form elements
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+
+            // Validate form elements exist
+            if (!nameInput || !emailInput || !phoneInput || !subjectInput || !messageInput) {
+                console.error('Form elements not found');
+                showNotification('There was an error with the form. Please try again.', 'error');
+                return;
+            }
+
             // Prepare the template parameters
             const templateParams = {
-                from_name: form.from_name.value,
-                from_email: form.from_email.value,
-                phone_number: form.phone_number.value,
-                subject: form.subject.value,
-                message: form.message.value,
+                from_name: nameInput.value,
+                from_email: emailInput.value,
+                phone_number: phoneInput.value,
+                subject: subjectInput.value,
+                message: messageInput.value,
                 to_email: 'azaan@academialearning.ca'
             };
             
@@ -287,11 +301,9 @@ function initContactForm() {
             }
             showNotification(errorMessage, 'error');
         } finally {
-            // Reset button
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1000);
+            // Reset button immediately if there was an error
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         }
     });
 }
