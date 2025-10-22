@@ -214,6 +214,11 @@ function initContactForm() {
         });
     });
 
+    // Initialize EmailJS
+    (function() {
+        emailjs.init("vM4XCTQee06R68Xkc");
+    })();
+
     // Form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -228,9 +233,24 @@ function initContactForm() {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
 
-        // Simulate form submission (replace with actual endpoint)
+        // Prepare the email parameters
+        const templateParams = {
+            to_email: 'azaan@academialearning.ca',
+            from_name: document.getElementById('name').value,
+            from_email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
         try {
-            await simulateFormSubmission();
+            // Send the email using EmailJS
+            await emailjs.send(
+                'service_yehujg8',
+                'template_morqydc',
+                templateParams
+            );
+
             showNotification('Thank you! Your message has been sent successfully.', 'success');
             form.reset();
             
@@ -245,6 +265,7 @@ function initContactForm() {
             });
             
         } catch (error) {
+            console.error('Error sending email:', error);
             showNotification('Sorry, there was an error sending your message. Please try again.', 'error');
         } finally {
             // Reset button
