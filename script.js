@@ -216,10 +216,7 @@ function initContactForm() {
 
     // Initialize EmailJS
     (function() {
-        emailjs.init({
-            publicKey: "vM4XCTQee06R68Xkc",
-            blockHeadless: false
-        });
+        emailjs.init("vM4XCTQee06R68Xkc");
         console.log('EmailJS Initialized');
     })();
 
@@ -250,12 +247,13 @@ function initContactForm() {
         try {
             // Get form data
             const templateParams = {
-                to_name: 'Azaan',
-                from_name: document.getElementById('name').value,
-                from_email: document.getElementById('email').value,
-                phone_number: document.getElementById('phone').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
                 subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
+                message: document.getElementById('message').value,
+                to_name: 'Azaan',
+                to_email: 'azaan@academialearning.ca'
             };
             
             console.log('Attempting to send email with data:', templateParams);
@@ -264,7 +262,8 @@ function initContactForm() {
             const response = await emailjs.send(
                 'service_yehujg8',
                 'template_morqydc',
-                templateParams
+                templateParams,
+                'vM4XCTQee06R68Xkc'
             );
             
             console.log('Email sent successfully:', response);
