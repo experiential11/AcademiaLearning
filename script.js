@@ -261,23 +261,40 @@ function initContactForm() {
 
             // Prepare the template parameters
             const templateParams = {
+                to: 'azaan@academialearning.ca',
                 from_name: nameInput.value,
                 from_email: emailInput.value,
                 phone_number: phoneInput.value,
                 subject: subjectInput.value,
                 message: messageInput.value,
-                to_email: 'azaan@academialearning.ca'
+                email: 'azaan@academialearning.ca', // Adding both possible parameter names
+                to_email: 'azaan@academialearning.ca',
+                reply_to: emailInput.value
             };
             
             console.log('Attempting to send email with params:', templateParams);
             
-            // Send the email using EmailJS send method
-            const response = await emailjs.send(
-                'service_yehujg8',
-                'template_morqydc',
-                templateParams,
-                'vM4XCTQee06R68Xkc'
-            );
+            try {
+                // Send the email using EmailJS send method
+                const response = await emailjs.send(
+                    'service_yehujg8',
+                    'template_morqydc',
+                    templateParams,
+                    'vM4XCTQee06R68Xkc'
+                );
+                
+                console.log('Email sent successfully:', response);
+                showNotification('Thank you! Your message has been sent successfully.', 'success');
+                form.reset();
+            } catch (error) {
+                console.error('Detailed error:', error);
+                let errorMessage = 'An error occurred while sending your message.';
+                if (error.text) {
+                    errorMessage += ' Details: ' + error.text;
+                }
+                showNotification(errorMessage, 'error');
+                throw error;
+            }
             
             console.log('Email sent successfully:', response);
             showNotification('Thank you! Your message has been sent successfully.', 'success');
