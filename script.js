@@ -217,6 +217,7 @@ function initContactForm() {
     // Initialize EmailJS
     (function() {
         emailjs.init("vM4XCTQee06R68Xkc");
+        console.log('EmailJS Initialized');
     })();
 
     // Form submission
@@ -244,13 +245,15 @@ function initContactForm() {
         };
 
         try {
+            console.log('Attempting to send email with params:', templateParams);
             // Send the email using EmailJS
-            await emailjs.send(
+            const response = await emailjs.sendForm(
                 'service_yehujg8',
                 'template_morqydc',
-                templateParams
+                form,
+                'vM4XCTQee06R68Xkc'
             );
-
+            console.log('Email sent successfully:', response);
             showNotification('Thank you! Your message has been sent successfully.', 'success');
             form.reset();
             
@@ -266,7 +269,7 @@ function initContactForm() {
             
         } catch (error) {
             console.error('Error sending email:', error);
-            showNotification('Sorry, there was an error sending your message. Please try again.', 'error');
+            showNotification('Sorry, there was an error sending your message. Error: ' + error.message, 'error');
         } finally {
             // Reset button
             setTimeout(() => {
