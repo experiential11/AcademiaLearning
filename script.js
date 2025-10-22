@@ -216,7 +216,10 @@ function initContactForm() {
 
     // Initialize EmailJS
     (function() {
-        emailjs.init("vM4XCTQee06R68Xkc");
+        emailjs.init({
+            publicKey: "vM4XCTQee06R68Xkc",
+            blockHeadless: false
+        });
         console.log('EmailJS Initialized');
     })();
 
@@ -245,14 +248,27 @@ function initContactForm() {
         };
 
         try {
-            console.log('Attempting to send email with params:', templateParams);
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                to_name: 'Azaan',
+                to_email: 'azaan@academialearning.ca'
+            };
+            
+            console.log('Attempting to send email with data:', formData);
+            
             // Send the email using EmailJS
-            const response = await emailjs.sendForm(
+            const response = await emailjs.send(
                 'service_yehujg8',
                 'template_morqydc',
-                form,
+                formData,
                 'vM4XCTQee06R68Xkc'
             );
+            
             console.log('Email sent successfully:', response);
             showNotification('Thank you! Your message has been sent successfully.', 'success');
             form.reset();
@@ -269,7 +285,11 @@ function initContactForm() {
             
         } catch (error) {
             console.error('Error sending email:', error);
-            showNotification('Sorry, there was an error sending your message. Error: ' + error.message, 'error');
+            let errorMessage = 'An error occurred while sending your message.';
+            if (error.message) {
+                errorMessage += ' Details: ' + error.message;
+            }
+            showNotification(errorMessage, 'error');
         } finally {
             // Reset button
             setTimeout(() => {
